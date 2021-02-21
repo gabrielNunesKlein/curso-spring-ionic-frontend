@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
-import { textSpanIsEmpty } from 'typescript';
 import { CredenciaisDTO } from '../../models/Credenciais.dto';
 import { AuthService } from '../../services/auth.service';
 
