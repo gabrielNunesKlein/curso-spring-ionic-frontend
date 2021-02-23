@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/Produto.dto';
+import { API_CONFIG } from '../../config/api.config';
+import { ProdutoService } from '../../services/domain/produto.services';
 
 @IonicPage()
 @Component({
@@ -12,12 +14,21 @@ export class ProdutoDetailPage {
 
   item: ProdutoDTO
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public produtoService: ProdutoService) {
   }
 
   ionViewDidLoad() {
-    this.item = {id: "1", nome: "Mouse", preco: 59.90}
-    
+    let produto_id = this.navParams.get('produto_id')
+    this.produtoService.findById(produto_id).subscribe(Response => {
+      this.item = Response
+      this.getImageIfExist()
+    }, error => {})
   }
 
+  getImageIfExist(){
+    this.produtoService.getImageFromBucket(this.item.id).subscribe(Response => {
+      this.item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${this.item.id}.jpg`
+    }, error => {})
+  }
 }
