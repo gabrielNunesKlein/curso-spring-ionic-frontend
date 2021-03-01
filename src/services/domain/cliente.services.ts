@@ -11,6 +11,10 @@ export class ClienteService {
     constructor(public httpCliente: HttpClient, public storage: StorageService){
     }
 
+    findById(id: string): Observable<ClienteDTO>{
+        return this.httpCliente.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/${id}`)
+    }
+
     findByEmail(email: string){
         return this.httpCliente.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`)
     }
