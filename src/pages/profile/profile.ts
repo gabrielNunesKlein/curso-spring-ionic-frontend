@@ -67,6 +67,24 @@ export class ProfilePage {
     });
   }
 
+  getGaleryPicture(){
+    this.cameraOn = true
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     this.picture = 'data:image/PNG;base64,' + imageData;
+     this.cameraOn = false
+    }, (err) => {
+     
+    });
+  }
+
   sendPicture(){
     this.clienteService.uploadPicture(this.picture).subscribe(Response => {
       this.picture = null
